@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">High-Bee Autos: Welcome Back, Your Flight Plan Awaits</title>
+    <style>
+        /*
+        ----------------------------------
+        GLOBAL & BASE STYLES
+        ----------------------------------
+        */
+        :root {
+            --primary-blue: rgb(11, 90, 209);
+            --dark-blue: rgb(6, 6, 70);
+            --light-bg: rgba(255, 255, 255, 0.65);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        body {
+            /* Using a placeholder image URL for a clean, professional look */
+            background-image: url("Media/bgimg.png"); 
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            /* Use Flexbox to center the form wrapper vertically */
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        a {
+            color: var(--primary-blue);
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            color: rgb(64, 135, 240);
+            font-size: 17px; /* Slight size change is okay for links */
+        }
+        
+        /*
+        ----------------------------------
+        FORM CONTAINER STYLES
+        ----------------------------------
+        */
+        .login-section {
+            width: 90%;
+            max-width: 400px; /* Max width for desktop readability */
+            border-radius: 12px;
+            
+            /* Correctly implemented background opacity */
+            background-color: var(--light-bg); 
+            color: var(--dark-blue);
+            padding: 30px;
+            
+            /* Enhanced Shadow/Glow */
+            box-shadow: 0px 0px 20px 5px var(--shadow-color);
+            transition: transform 0.3s ease;
+        }
+
+        .login-section:hover {
+             /* Subtle hover feedback on the entire box */
+            transform: translateY(-2px); 
+        }
+
+        .login, .signup-title {
+            text-align: center;
+            font-size: 40px; /* Reduced font size for better mobile fit */
+            margin-bottom: 20px;
+            text-shadow: 0 0 6px white;
+            transition: all 0.3s ease;
+            color: var(--dark-blue);
+        }
+
+        .login:hover, .signup-title:hover {
+            color: var(--primary-blue);
+            text-shadow: 0 0 8px var(--dark-blue);
+        }
+
+        /*
+        ----------------------------------
+        INPUT & FIELD STYLES
+        ----------------------------------
+        */
+        fieldset {
+            border: none;
+            padding: 10px 0;
+            margin-bottom: 10px;
+        }
+
+        .legend {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+            color: var(--dark-blue);
+        }
+        
+        .input {
+            width: 95%; /* Adjust to fit padding inside the parent */
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            box-sizing: border-box; /* Ensures padding doesn't increase total width */
+            font-size: 16px;
+        }
+        
+        .input:focus {
+            border-color: var(--primary-blue);
+            outline: none;
+            box-shadow: 0 0 5px rgba(11, 90, 209, 0.5);
+        }
+
+        /*
+        ----------------------------------
+        BUTTON STYLES
+        ----------------------------------
+        */
+        .login-btn {
+            display: block; 
+            width: 100%;
+            color: white;
+            background-color: var(--primary-blue);
+            border-radius: 8px;
+            padding: 12px 15px;
+            cursor: pointer;
+            border: 2px solid white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.3s ease-in-out;
+        }
+
+        .login-btn:hover {
+            background-color: var(--dark-blue);
+            border: 2px solid lightblue;
+            transform: translateY(-1px);
+        }
+
+        /*
+        ----------------------------------
+        CHECKBOX & FOOTER FIXES
+        ----------------------------------
+        */
+        .rem-check-box {
+            display: flex; 
+            justify-content: flex-end; 
+            gap: 5px;
+            margin-bottom: 15px; 
+            align-items: center;
+        }
+
+        .rem-check-box input[type="checkbox"] {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-blue); 
+        }
+        
+        .rem-check-box label {
+            cursor: pointer;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .rem-check-box:hover label {
+            color: var(--primary-blue);
+        }
+
+        /* Styling when checked (targeting the label) */
+        #remember-login:checked + label, #remember-signup:checked + label {
+            font-weight: bold;
+            color: var(--dark-blue);
+        }
+
+        .guest-link, .contact-link {
+             display: block;
+             text-align: right;
+             margin-top: 10px;
+        }
+
+        .sign-up-link {
+            text-align: center;
+            padding-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 20px; 
+        }
+
+        /*
+        ----------------------------------
+        MODAL STYLES (CONTACT US)
+        ----------------------------------
+        */
+        .modal {
+            position: fixed;
+            z-index: 1000; /* Ensure it's on top of everything */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent overlay */
+            display: flex; /* Use flex to easily center the content box */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            animation: fadeIn 0.3s;
+            color: var(--dark-blue);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close-btn {
+            color: var(--dark-blue);
+            float: right;
+            font-size: 36px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .modal-title {
+            color: var(--dark-blue);
+            font-size: 28px;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .modal-content h4 {
+            color: var(--primary-blue);
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+
+        .social-links ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+        
+        .social-links li {
+            margin-bottom: 8px;
+        }
+        
+        .social-links a {
+            font-size: 18px;
+            display: inline-block;
+            padding: 2px 0;
+        }
+        
+        .social-links a:hover {
+            color: var(--dark-blue);
+            font-size: 18px; 
+            text-decoration: underline;
+        }
+
+        /* Hiding inactive forms and the modal by default */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-section">
+        <!-- LOGIN VIEW -->
+        <div id="login-view">
+            <h2 class="login">Login</h2>
+            <p class="sub-heading">Welcome Back. Your Flight Plan Awaits.</p>
+            <form id="login-form">
+                <fieldset>
+                    <legend class="legend">Email</legend>
+                    <input class="input" type="email" placeholder="Enter email" required>
+                </fieldset>
+                <fieldset>
+                    <legend class="legend">Password</legend>
+                    <input class="input" type="password" placeholder="Enter password" required>
+                </fieldset>
+                 <div class="rem-check-box">
+                    <input type="checkbox" id="remember-login">
+                    <label for="remember-login">Remember me</label>
+                </div>
+                <!-- Corrected: Button inside form for submission -->
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+            <div class="sign-up-link">
+                <span class="guest-link"><a href="#">Forgot password?</a></span>
+                <span class="AIHomepage.html"><a href="#">Visit as Guest</a></span>
+                <div>
+                    Don't have an account? <a href="#" onclick="switchForm('signup')">Sign up</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIGNUP VIEW -->
+        <div id="signup-view" class="hidden">
+            <h2 class="signup-title">Sign up</h2>
+            <p class="sub-heading">Join the Hive. Drive the Future.</p>
+            <form id="signup-form">
+                <fieldset>
+                    <legend class="legend">Full Name</legend>
+                    <input class="input" type="text" placeholder="Enter full legal name" required>
+                </fieldset>
+                <fieldset>
+                    <legend class="legend">Email</legend>
+                    <input class="input" type="email" placeholder="Enter email" required>
+                </fieldset>
+                <fieldset>
+                    <legend class="legend">Phone Number</legend>
+                    <input class="input" type="tel" placeholder="Enter phone number" required>
+                </fieldset>
+                <fieldset>
+                    <legend class="legend">Date of Birth</legend>
+                    <input class="input" type="date">
+                </fieldset>
+                <fieldset>
+                    <legend class="legend">Create new password</legend>
+                    <input class="input" type="password" placeholder="Create new password" required>
+                </fieldset>
+                <fieldset>
+                    <legend class="legend">Confirm password</legend>
+                    <input class="input" type="password" placeholder="Enter password again" required>
+                </fieldset>
+                <div class="rem-check-box">
+                    <input type="checkbox" id="remember-signup">
+                    <label for="remember-signup">Remember me</label>
+                </div>
+                <button type="submit" class="login-btn">Submit</button>
+            </form>
+            <div class="sign-up-link">
+                <span class="AIHomepage.html"><a href="#">Visit as Guest</a></span>
+                <div>
+                    Already have an account? <a href="#" onclick="switchForm('login')">Login</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER & CONTACT -->
+        <div class="contact-link">
+            <!-- This link now opens the modal -->
+            <a href="#" onclick="toggleContactModal(true); return false;">Contact us</a>
+        </div>
+        <footer class="footer">High-Bee Autos 2025&copy;</footer>
+    </div>
+
+    <!-- CONTACT MODAL STRUCTURE -->
+    <div id="contact-modal" class="modal hidden">
+        <div class="modal-content">
+            <!-- Close button calls toggleContactModal(false) -->
+            <span class="close-btn" onclick="toggleContactModal(false)">&times;</span>
+            <h3 class="modal-title">Get In Touch With The Hive</h3>
+            <p class="modal-subtext">We're ready to assist you on your flight plan. Find us across all platforms!</p>
+
+            <div class="contact-info">
+                <h4>Primary Contact</h4>
+                <p><strong>Email:</strong> <a href="mailto:support@highbeeautos.com">support@highbeeautos.com</a></p>
+                <p><strong>Phone:</strong> +1 (555) High-Bee</p>
+            </div>
+            
+            <div class="social-links">
+                <h4>Social Flight Paths</h4>
+                <ul>
+                    <li><a href="https://facebook.com/highbeeautos" target="_blank">Facebook (@HighBeeAutos)</a></li>
+                    <li><a href="https://instagram.com/highbeeautos" target="_blank">Instagram (@HighBeeAutos)</a></li>
+                    <li><a href="https://x.com/highbeeautos" target="_blank">X (Twitter) (@HighBeeAutos)</a></li>
+                    <li><a href="https://linkedin.com/company/highbeeautos" target="_blank">LinkedIn (High-Bee Autos)</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple function to switch between the login and signup views
+        function switchForm(view) {
+            const loginView = document.getElementById('login-view');
+            const signupView = document.getElementById('signup-view');
+            const titleElement = document.getElementById('page-title');
+
+            if (view === 'signup') {
+                loginView.classList.add('hidden');
+                signupView.classList.remove('hidden');
+                titleElement.textContent = 'High-Bee Autos: Join the Hive. Drive the Future.';
+            } else {
+                loginView.classList.remove('hidden');
+                signupView.classList.add('hidden');
+                titleElement.textContent = 'High-Bee Autos: Welcome Back, Your Flight Plan Awaits.';
+            }
+        }
+
+        // NEW FUNCTION: Toggles the Contact Us modal visibility
+        function toggleContactModal(show) {
+            const modal = document.getElementById('contact-modal');
+            if (show) {
+                // Show modal and disable background scrolling
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Hide modal and re-enable background scrolling
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Prevents form submission and console logs the action
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Login form submitted!');
+        });
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Sign up form submitted!');
+        });
+    </script>
+</body>
+</html>
